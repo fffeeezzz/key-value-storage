@@ -5,11 +5,16 @@ import (
 	"html/template"
 	"net/http"
 
-	"key-value-storage/internal/domain"
-	"key-value-storage/internal/service"
+	"key-value-storage/internal"
 )
 
-func InsertElement(w http.ResponseWriter, r *http.Request) {
+type InsertHandler struct {
+	useCase *internal.InsertUseCase
+}
+
+var handler = &InsertHandler{useCase: &internal.InsertUseCase{}}
+
+func (h *InsertHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("Inserting an element to the KV storage!")
 
 	tmpl := template.Must(template.ParseFiles("./files/insert.gohtml"))
@@ -18,22 +23,22 @@ func InsertElement(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	key := r.FormValue("key")
-	v := &domain.Element{
-		ID:      r.FormValue("id"),
-		Name:    r.FormValue("name"),
-		Surname: r.FormValue("surname"),
-	}
+	command := h.insertCommandFromRequest(r)
 
-	if !domain.Data.Add(key, v) {
-		fmt.Println("add operation failed")
-		return
-	}
-
-	if err := service.Save(); err != nil {
-		http.Error(w, "save: "+err.Error(), http.StatusBadGateway)
+	err := handler.useCase.Handle(command)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadGateway)
 		return
 	}
 
 	tmpl.Execute(w, struct{ Success bool }{Success: true})
+}
+
+func (h *InsertHandler) insertCommandFromRequest(r *http.Request) *internal.InsertCommand {
+	return &internal.InsertCommand{
+		Key:     r.FormValue("key"),
+		ID:      r.FormValue("id"),
+		Name:    r.FormValue("name"),
+		Surname: r.FormValue("surname"),
+	}
 }
