@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"net/http"
 
-	"key-value-storage-v1/internal/domain"
+	"key-value-storage/internal/domain"
 )
 
 func ListAll(w http.ResponseWriter, r *http.Request) {

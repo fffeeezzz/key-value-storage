@@ -6,8 +6,8 @@ import (
 	"net/http"
 	"strings"
 
-	"key-value-storage-v1/internal/api"
-	"key-value-storage-v1/internal/service"
+	"key-value-storage/internal/api"
+	"key-value-storage/internal/service"
 )
 
 func main() {

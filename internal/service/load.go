@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"os"
 
-	"key-value-storage-v1/internal/domain"
+	"key-value-storage/internal/domain"
 )
 
 var datafile = "./files/tmp/datafile.gob"

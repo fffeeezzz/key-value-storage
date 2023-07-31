@@ -5,8 +5,8 @@ import (
 	"html/template"
 	"net/http"
 
-	"key-value-storage-v1/internal/domain"
-	"key-value-storage-v1/internal/service"
+	"key-value-storage/internal/domain"
+	"key-value-storage/internal/service"
 )
 
 func InsertElement(w http.ResponseWriter, r *http.Request) {

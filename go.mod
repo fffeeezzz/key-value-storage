@@ -1,1 +1,1 @@
-module key-value-storage-v1
+module key-value-storage
