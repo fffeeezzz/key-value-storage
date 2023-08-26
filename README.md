@@ -1,3 +1,3 @@
 # key-value-storage
 
-Simply http key value storage
+Simple http key value storage
