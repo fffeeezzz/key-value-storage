@@ -20,7 +20,7 @@ func main() {
 	router.HandleFunc("/", api.HomePage)
 	router.HandleFunc("/change", api.ChangeElement)
 	router.HandleFunc("/list", api.ListAll)
-	router.HandleFunc("/insert", api.InsertElement)
+	router.Handle("/insert", &api.InsertHandler{})
 
 	log.Fatal(http.ListenAndServe("localhost:8080", router))
 }
